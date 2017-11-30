@@ -33,3 +33,43 @@ geom_point(aes(x=displ, y=hwy))+
 geom_smooth(aes(x=displ, y=hwy))+
   labs(title="test")
 ```
+
+## data wrangling with 'dplyr'
+```{r}
+library(tidyverse)
+gapminder <- readr::read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv")
+```
+
+## useful functions to get to know your data:
+```{r}
+head(gapminder) #show first 6 rows of data
+tail(gapminder) #show last 5 rows of data
+head(gapminder, 30)
+str(gapminder) #checks if variables are num, int, char ext
+names(gapminder) # column headers
+dim(gapminder) #dimentions of the data set
+ncol(gapminder)#num of columns 
+nrow(gapminder)#num of row
+c(nrow(gapminder), ncol(gapminder)) # c is combine
+summary (gapminder) #summary stats or each columns
+```
+
+## for everything above, we were operating on the whole dapminder dataset ... $ is for a column
+
+head(gapminder$pop)
+
+##actually working with dplyr
+```{r}
+filter(gapminder, country == "Mexico")
+sweden <- filter(gapminder, country == "Sweden")
+mean(sweden$lifeExp)
+```
+
+##pipe operator '%>%'
+gapminder %>% head(3)
+
+```{r}
+gapminder %>% 
+  filter(country == "Sweden") %>% 
+  summarize (mean_lifeExp = mean(lifeExp))
+```
