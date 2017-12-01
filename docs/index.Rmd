@@ -93,3 +93,52 @@ gapminder %>%
   filter(country == "Mexico",
          year == 2002)
 ```
+
+
+#mutate () to add columns
+```{r}
+gapminder %>%
+  mutate(gdp= pop*gdpPercap)
+```
+
+#lets add an index
+```{r}
+gapminder %>%
+  mutate(index = 1:nrow(gapminder)) %>%
+  tail()
+```
+
+#lets add an index and dpp and save it all to a new array
+```{r}
+expanded_data <- gapminder %>%
+  mutate(index = 1:nrow(gapminder), gdp= pop*gdpPercap)
+```
+
+#find maximum gdp of Egpyt and Vietnam - Create new column, but its one value which will be used to populate every data line
+```{r}
+gapminder %>%
+  filter(country %in% c("Egypt", "Vietnam")) %>%
+  mutate(max_gdpPercap = max(gdpPercap))
+```
+
+#ind maximum gdp of Egpyt and Vietnam seperately- Create new column, report the max for each country
+```{r}
+gapminder %>%
+  filter(country %in% c("Egypt", "Vietnam")) %>%
+  group_by(country) %>%
+  summarize(max_gdpPercap = max(gdpPercap))
+```
+
+#ind maximum gdp of every countryseperately- Create new column, report the max for each country
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  summarize(max_gdpPercap = max(gdpPercap))
+```
+
+#ind maximum gdp of every countryseperately- Create new column, report the max for each country keep the year
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  filter(gdpPercap == max(gdpPercap))
+```
