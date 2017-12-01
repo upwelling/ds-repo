@@ -136,9 +136,6 @@ gapminder %>%
   summarize(max_gdpPercap = max(gdpPercap))
 ```
 
-#ind maximum gdp of every countryseperately- Create new column, report the max for each country keep the year
-```{r}
-gapminder %>%
-  group_by(country) %>%
-  filter(gdpPercap == max(gdpPercap))
-```
+
+
+#

@@ -551,26 +551,8 @@ mean(sweden$lifeExp)</code></pre>
 ## 10     Belgium    33692.6051
 ## # ... with 132 more rows</code></pre>
 </div>
-<div id="ind-maximum-gdp-of-every-countryseperately--create-new-column-report-the-max-for-each-country-keep-the-year" class="section level1">
-<h1>ind maximum gdp of every countryseperately- Create new column, report the max for each country keep the year</h1>
-<pre class="r"><code>gapminder %&gt;%
-  group_by(country) %&gt;%
-  filter(gdpPercap == max(gdpPercap))</code></pre>
-<pre><code>## # A tibble: 142 x 6
-## # Groups:   country [142]
-##        country  year       pop continent lifeExp  gdpPercap
-##          &lt;chr&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Afghanistan  1982  12881816      Asia  39.854   978.0114
-##  2     Albania  2007   3600523    Europe  76.423  5937.0295
-##  3     Algeria  2007  33333216    Africa  72.301  6223.3675
-##  4      Angola  1967   5247469    Africa  35.985  5522.7764
-##  5   Argentina  2007  40301927  Americas  75.320 12779.3796
-##  6   Australia  2007  20434176   Oceania  81.235 34435.3674
-##  7     Austria  2007   8199783    Europe  79.829 36126.4927
-##  8     Bahrain  2007    708573      Asia  75.635 29796.0483
-##  9  Bangladesh  2007 150448339      Asia  64.062  1391.2538
-## 10     Belgium  2007  10392226    Europe  79.441 33692.6051
-## # ... with 132 more rows</code></pre>
+<div id="section" class="section level1">
+<h1></h1>
 </div>
 
 
