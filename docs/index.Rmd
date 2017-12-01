@@ -73,3 +73,23 @@ gapminder %>%
   filter(country == "Sweden") %>% 
   summarize (mean_lifeExp = mean(lifeExp))
 ```
+
+#select 2 columns
+```{r}
+select(gapminder, year, lifeExp)
+gapminder %>% 
+  select(year, lifeExp)
+```
+#lets filter some more
+```{r}
+gapminder %>% 
+  filter(country == "Cambodia") %>% 
+  select (-continent, -lifeExp)
+```
+
+#lets filter EVEN more
+```{r}
+gapminder %>% 
+  filter(country == "Mexico",
+         year == 2002)
+```
