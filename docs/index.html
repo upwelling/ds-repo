@@ -227,12 +227,12 @@ div.tocify {
 <div id="scatterplot" class="section level2">
 <h2>Scatterplot</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ---------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 2.2.1     v purrr   0.2.4
 ## v tibble  1.3.4     v dplyr   0.7.4
 ## v tidyr   0.7.2     v stringr 1.2.0
 ## v readr   1.1.1     v forcats 0.2.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------------------------------------ tidyverse_conflicts() --
+<pre><code>## -- Conflicts ------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>g &lt;- ggplot(data = mpg, aes(x=displ, y=hwy))
@@ -551,8 +551,82 @@ mean(sweden$lifeExp)</code></pre>
 ## 10     Belgium    33692.6051
 ## # ... with 132 more rows</code></pre>
 </div>
-<div id="section" class="section level1">
-<h1></h1>
+<div id="combining-data-sets" class="section level1">
+<h1>combining data sets</h1>
+<pre class="r"><code>## read in CO2 emmisionts data
+library(tidyverse)
+carbon &lt;- read_csv(&quot;https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   country = col_character(),
+##   co2_2007 = col_double()
+## )</code></pre>
+<pre class="r"><code>carbon %&gt;% head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##          country     co2_2007
+##            &lt;chr&gt;        &lt;dbl&gt;
+## 1    Afghanistan   2937.88342
+## 2        Albania   4217.55106
+## 3        Algeria 105838.12850
+## 4 American Samoa     18.36844
+## 5         Angola  17405.00473
+## 6       Anguilla     12.35392</code></pre>
+<pre class="r"><code>##create new variablie with only gapminder 2007 data
+gapminder &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   country = col_character(),
+##   year = col_integer(),
+##   pop = col_double(),
+##   continent = col_character(),
+##   lifeExp = col_double(),
+##   gdpPercap = col_double()
+## )</code></pre>
+<pre class="r"><code>gap_2007 &lt;- gapminder %&gt;%
+  filter(year==2007)
+gap_2007 %&gt;% head()</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##       country  year      pop continent lifeExp  gdpPercap
+##         &lt;chr&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1 Afghanistan  2007 31889923      Asia  43.828   974.5803
+## 2     Albania  2007  3600523    Europe  76.423  5937.0295
+## 3     Algeria  2007 33333216    Africa  72.301  6223.3675
+## 4      Angola  2007 12420476    Africa  42.731  4797.2313
+## 5   Argentina  2007 40301927  Americas  75.320 12779.3796
+## 6   Australia  2007 20434176   Oceania  81.235 34435.3674</code></pre>
+<pre class="r"><code>gap_2007 %&gt;% str()</code></pre>
+<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    142 obs. of  6 variables:
+##  $ country  : chr  &quot;Afghanistan&quot; &quot;Albania&quot; &quot;Algeria&quot; &quot;Angola&quot; ...
+##  $ year     : int  2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...
+##  $ pop      : num  31889923 3600523 33333216 12420476 40301927 ...
+##  $ continent: chr  &quot;Asia&quot; &quot;Europe&quot; &quot;Africa&quot; &quot;Africa&quot; ...
+##  $ lifeExp  : num  43.8 76.4 72.3 42.7 75.3 ...
+##  $ gdpPercap: num  975 5937 6223 4797 12779 ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..$ cols   :List of 6
+##   .. ..$ country  : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ year     : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+##   .. ..$ pop      : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
+##   .. ..$ continent: list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ lifeExp  : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
+##   .. ..$ gdpPercap: list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
+##   ..$ default: list()
+##   .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_guess&quot; &quot;collector&quot;
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
+<pre class="r"><code>#left_join gap_2007 and carbon
+lj &lt;- left_join(gap_2007, carbon, by = &quot;country&quot;)
+lj %&gt;% dim()</code></pre>
+<pre><code>## [1] 142   7</code></pre>
+<pre class="r"><code>##righ_join same datasets
+rj &lt;- right_join(gap_2007, carbon, by = &quot;country&quot;)
+rj %&gt;% dim()</code></pre>
+<pre><code>## [1] 12  7</code></pre>
 </div>
 
 

@@ -136,6 +136,26 @@ gapminder %>%
   summarize(max_gdpPercap = max(gdpPercap))
 ```
 
+#combining data sets 
+```{r}
+## read in CO2 emmisionts data
+library(tidyverse)
+carbon <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv")
 
+carbon %>% head()
 
-#
+##create new variablie with only gapminder 2007 data
+gapminder <- readr::read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv")
+gap_2007 <- gapminder %>%
+  filter(year==2007)
+gap_2007 %>% head()
+gap_2007 %>% str()
+
+#left_join gap_2007 and carbon
+lj <- left_join(gap_2007, carbon, by = "country")
+lj %>% dim()
+
+##righ_join same datasets
+rj <- right_join(gap_2007, carbon, by = "country")
+rj %>% dim()
+```
